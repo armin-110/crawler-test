@@ -73,7 +73,7 @@ cat_name=cat_program[1]
 cat_game=get_cat_link_name('https://cafebazaar.ir/pages/list~app-category~game-categories')
 cat_game_link=cat_game[0]
 cat_game_name=cat_game[1]
-
+print(cat_game[0])
 for j in range(len(cat_link)):
     uniqe_categori_links=get_categori_links(cat_link[j])
     for i in range(len(uniqe_categori_links[0])):
@@ -85,11 +85,8 @@ for j in range(len(cat_link)):
         data_frame.to_sql('cafebazar_meta'+str(date_a.date()).replace('-','')+str(date_a.time()).split(':')[0],con,if_exists='append', index=False)
         print(link_meta[0])
 
-# print(get_metadata('https://cafebazaar.ir/app/com.nazdooneh.ghazakodakan')) 
-
-
-# print(cat_game_link)
-# print(cat_game_name)
+# # print(cat_game_link)
+# # print(cat_game_name)
 for j in range(len(cat_game_link)):
     uniqe_categori_links=get_categori_links(cat_game_link[j])
     for i in range(len(uniqe_categori_links[0])):
@@ -100,4 +97,7 @@ for j in range(len(cat_game_link)):
         data_frame =pd.DataFrame(link_meta[0],index=[0])
         data_frame.to_sql('cafebazar_meta'+str(date_a.date()).replace('-','')+str(date_a.time()).split(':')[0],con,if_exists='append', index=False)
         print(link_meta[0])
+# print(get_metadata('https://cafebazaar.ir/app/com.Pixigames.SibilKoloft')) 
+
+
 

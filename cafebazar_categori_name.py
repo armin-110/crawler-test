@@ -23,6 +23,7 @@ class GETCATEGORI():
         self.driver=driver
         ##################################################################################
     def get_cat_link_name(self):
+        cat_link_name_list.clear()
         self.driver.get(self.page_link) 
         
 
