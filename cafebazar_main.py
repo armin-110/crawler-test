@@ -81,6 +81,7 @@ for j in range(len(cat_link)):
         date_i=datetime.datetime.now()
         link_meta[0]['crawling_date']=str(date_i.date()).replace('-','')+str(date_i.time()).split(':')[0]
         link_meta[0]['categori_name']=cat_name[j]
+        link_meta[0]['cat']='program'
         data_frame =pd.DataFrame(link_meta[0],index=[0])
         data_frame.to_sql('cafebazar_meta'+str(date_a.date()).replace('-','')+str(date_a.time()).split(':')[0],con,if_exists='append', index=False)
         print(link_meta[0])
@@ -92,6 +93,7 @@ for j in range(len(cat_game_link)):
         date_i=datetime.datetime.now()
         link_meta[0]['crawling_date']=str(date_i.date()).replace('-','')+str(date_i.time()).split(':')[0]
         link_meta[0]['categori_name']=cat_game_name[j]
+        link_meta[0]['cat']='game'
         data_frame =pd.DataFrame(link_meta[0],index=[0])
         data_frame.to_sql('cafebazar_meta'+str(date_a.date()).replace('-','')+str(date_a.time()).split(':')[0],con,if_exists='append', index=False)
         print(link_meta[0])

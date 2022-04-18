@@ -54,7 +54,7 @@ class Getmeta():
         except:
             fb= WebDriverWait(self.driver, 40).until(EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/section')))
         
-        meta_dic = {'categori_name':'','content_name': '','content_link':self.content_link,'rate':'0','ratings':'0','Size':'','Installs':'0','Current Version':'','crawling_date':''}
+        meta_dic = {'cat':'','categori_name':'','content_name': '','content_link':self.content_link,'rate':'0','ratings':'0','Size':'','Installs':'0','Current Version':'','crawling_date':''}
         html=self.driver.execute_script("return arguments[0].outerHTML;",fb)
         html_soup=b(html,'html.parser')
         converter = bs2json()
@@ -100,7 +100,7 @@ class Getmeta():
         print(json_class_find[0]['div'][1]['dd']['div']['text'])#rate
         meta_dic['rate']=float(json_class_find[0]['div'][1]['dd']['div']['text'])
         pattern = '[،أا-ی]'
-        print(re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text']).strip())#ratings
+        # print(re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text']).strip())#ratings
         meta_dic['ratings']=int(float(re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text'])))
         try:
             print(json_class_find[0]['div'][2]['dd']['text'])#size
