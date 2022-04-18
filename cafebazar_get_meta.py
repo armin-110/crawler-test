@@ -54,7 +54,7 @@ class Getmeta():
         except:
             fb= WebDriverWait(self.driver, 40).until(EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/section')))
         
-        meta_dic = {'categori_name':'','content_name': '','content_link':self.content_link,'rate':'','ratings':'','Size':'','Installs':'','Current Version':'','crawling_date':''}
+        meta_dic = {'categori_name':'','content_name': '','content_link':self.content_link,'rate':'0','ratings':'0','Size':'','Installs':'0','Current Version':'','crawling_date':''}
         html=self.driver.execute_script("return arguments[0].outerHTML;",fb)
         html_soup=b(html,'html.parser')
         converter = bs2json()
@@ -80,18 +80,28 @@ class Getmeta():
                 pass
 
        
-        ################################################InfoCube__content fs-14
+        ################################################
         class_find=html_soup.findAll('dl',{'class':'InfoCubes'})
         json_class_find = converter.convertAll(class_find)
-       
         print(len(json_class_find))
         print(json_class_find[0]['div'][0]['dd']['text'])#install
-        meta_dic['Installs']=json_class_find[0]['div'][0]['dd']['text']
+
+        pattern = '[<>ا-ی]'
+        if 'هزار' in json_class_find[0]['div'][0]['dd']['text']:
+            meta_dic['Installs']=int(float(re.sub(pattern,'', json_class_find[0]['div'][0]['dd']['text'].replace("+",""))))*1000
+    
+        elif 'میلیون' in json_class_find[0]['div'][0]['dd']['text']:
+            meta_dic['Installs']=int(float(re.sub(pattern,'', json_class_find[0]['div'][0]['dd']['text'].replace("+",""))))*1000000
+        else:
+            meta_dic['Installs']=int(float(re.sub(pattern,'',json_class_find[0]['div'][0]['dd']['text'].replace("+",""))))
+       
+       
+        # meta_dic['Installs']=json_class_find[0]['div'][0]['dd']['text']
         print(json_class_find[0]['div'][1]['dd']['div']['text'])#rate
-        meta_dic['rate']=json_class_find[0]['div'][1]['dd']['div']['text']
+        meta_dic['rate']=float(json_class_find[0]['div'][1]['dd']['div']['text'])
         pattern = '[،أا-ی]'
         print(re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text']).strip())#ratings
-        meta_dic['ratings']=re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text']).strip()
+        meta_dic['ratings']=int(float(re.sub(pattern,'', json_class_find[0]['div'][1]['dt']['text'])))
         try:
             print(json_class_find[0]['div'][2]['dd']['text'])#size
             meta_dic['Size']=json_class_find[0]['div'][2]['dd']['text']
